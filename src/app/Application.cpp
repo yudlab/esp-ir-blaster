@@ -3,6 +3,7 @@
 void Application::begin() {
     _display.begin();
     _trackball.begin();
+    _trackballLED.begin();
     _irReceiver.begin();
     _irTransmitter.begin();
     render();
