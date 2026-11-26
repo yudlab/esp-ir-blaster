@@ -2,13 +2,13 @@
 
 Modular firmware for the GOOUUU ESP32-S3-CAM N16R8 using PlatformIO and Arduino.
 
-The first milestone is a small TFT + Blackberry-style trackball test application. IR classes are included but remain disabled until safe GPIOs and wiring are confirmed. Camera and microSD pins are reserved.
+The first milestone is a small TFT + Blackberry-style trackball test application. IR classes are included but remain disabled until safe GPIOs and wiring are confirmed. A separate RGBW PWM driver is included, but its pins remain unassigned. Camera and microSD pins are reserved.
 
 ## Hardware target
 - ESP32-S3-WROOM-1 N16R8 (16 MB flash, 8 MB octal PSRAM)
 - GOOUUU ESP32-S3-CAM carrier
 - ST7789 SPI TFT, default 240x320
-- Five-switch Blackberry trackball
+- Hall-effect Blackberry trackball (4 motion outputs + push switch) with 4-channel RGBW PWM lighting
 - Optional IR receiver and IR LED driver
 
 ## Pin allocation
@@ -54,7 +54,7 @@ The environment targets esp32-s3-devkitc-1 with 16 MB flash, OPI PSRAM and nativ
 - IR menu items report that GPIOs are not configured.
 - System Information reports flash, heap and PSRAM status.
 
-## Structure
+## GPIO capacity and expansion\n\nThe complete requested direct-GPIO budget is 15 signals: IR TX/RX (2), TFT (4 minimum as specified by the user; this repository's current TFT_eSPI setup also uses reset and backlight GPIOs), trackball motion/button (5), and RGBW PWM (4). The carrier does not provide 15 safe spare GPIOs once camera, microSD, flash/PSRAM, TFT and USB functions are reserved. Do not wire the full design using the current provisional pin table.\n\nRecommended expansion: use an MCP23017 (or equivalent) for the five trackball digital inputs and a PCA9685 for the four RGBW PWM channels. These can share an I²C bus, subject to confirming the board's accessible SDA/SCL pins and voltage levels. Keep IR TX/RX on two remaining suitable native GPIOs. The PCA9685 is preferable to an MCP23017 for dimming because it provides hardware PWM.\n\n## Structure
 - include/config.h: central hardware configuration
 - src/main.cpp: Arduino setup() and loop()
 - src/display: TFT class
