@@ -15,12 +15,12 @@ The first milestone is a small TFT + Blackberry-style trackball test application
 
 | Function | GPIO | Notes |
 |---|---:|---|
-| TFT SCLK | 42 | Onboard TFT connector |
-| TFT MOSI | 41 | Onboard TFT connector |
-| TFT DC | 45 | Onboard TFT connector |
-| TFT CS | -1 | CS tied low |
-| TFT RESET | 0 | Onboard TFT connector; boot strap pin |
-| TFT backlight | 21 | Onboard TFT connector |
+| TFT SCLK | 42 | TFT connector |
+| TFT MOSI | 41 | TFT connector |
+| TFT DC | 45 | TFT connector |
+| TFT CS | 47 | TFT connector |
+| TFT RESET | 0 | TFT connector; boot strap pin |
+| TFT backlight | 21 | TFT connector |
 | Trackball UP | 1 | QWIIC SDA pad; QWIIC unused |
 | Trackball DOWN | 2 | QWIIC SCL pad; QWIIC unused |
 | Trackball LEFT | 14 | GPIO |
