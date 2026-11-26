@@ -8,6 +8,10 @@ void Trackball::begin() {
         TrackballConfig::PIN_PRESS
     };
     for (int i = 0; i < 5; ++i) {
+        if (pins[i] < 0) {
+            _buttons[i] = {pins[i], HIGH, HIGH, millis()};
+            continue;
+        }
         pinMode(pins[i], INPUT_PULLUP);
         const bool reading = digitalRead(pins[i]);
         _buttons[i] = {pins[i], reading, reading, millis()};
@@ -15,11 +19,13 @@ void Trackball::begin() {
 }
 
 bool Trackball::isPressed(int pin) const {
+    if (pin < 0) return false;
     const bool level = digitalRead(pin);
     return TrackballConfig::ACTIVE_LOW ? !level : level;
 }
 
 TrackballEvent Trackball::updateButton(Button& button, TrackballEvent event) {
+    if (button.pin < 0) return TrackballEvent::NONE;
     const bool reading = digitalRead(button.pin);
     if (reading != button.lastReading) {
         button.lastChange = millis();
