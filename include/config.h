@@ -31,13 +31,23 @@ namespace TrackballConfig {
     constexpr int PIN_UP = 1;
     constexpr int PIN_DOWN = 2;
     constexpr int PIN_LEFT = 14;
-    constexpr int PIN_RIGHT = 43;
-    constexpr int PIN_PRESS = 44;
+    constexpr int PIN_RIGHT = -1; // Pending GPIO-expander allocation.
+    constexpr int PIN_PRESS = -1; // Pending GPIO-expander allocation.
     constexpr bool ACTIVE_LOW = true;
     constexpr uint32_t DEBOUNCE_MS = 25;
 }
 
 // Deliberately disabled until final IR wiring and safe GPIOs are confirmed.
+namespace TrackballLedConfig {
+    // PWM channels are deliberately unassigned until the GPIO-expander/pin plan is finalised.
+    constexpr int PIN_RED = -1;
+    constexpr int PIN_GREEN = -1;
+    constexpr int PIN_BLUE = -1;
+    constexpr int PIN_WHITE = -1;
+    constexpr uint32_t PWM_FREQUENCY = 5000;
+    constexpr uint8_t PWM_RESOLUTION = 8;
+}
+
 namespace IRConfig {
     constexpr int PIN_RECEIVER = -1;
     constexpr int PIN_TRANSMITTER = -1;
