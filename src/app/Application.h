@@ -22,6 +22,7 @@ private:
     int _selectedItem = 0;
     uint32_t _lastRefresh = 0;
     String _trackballStatus = "No input";
+    bool _pressToExit = false;
 
     void handleEvent(TrackballEvent event);
     void render();
