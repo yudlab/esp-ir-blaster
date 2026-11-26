@@ -18,7 +18,7 @@ void Application::update() {
 
     if (millis() - _lastRefresh >= 250) {
         if (_screen == Screen::TRACKBALL_TEST) {
-            _trackballStatus = _trackball.getState();
+            if (!_pressToExit) _trackballStatus = _trackball.getState();
             render();
         } else if (_screen == Screen::IR_RECEIVER && _irReceiver.isEnabled()) {
             render();
@@ -41,11 +41,23 @@ void Application::handleEvent(TrackballEvent event) {
         return;
     }
 
-    if (_screen == Screen::TRACKBALL_TEST && event != TrackballEvent::PRESS) {
-        _trackballStatus = _trackball.getState();
-        render();
+    if (_screen == Screen::TRACKBALL_TEST) {
+        if (event == TrackballEvent::PRESS) {
+            if (_pressToExit) {
+                returnHome();
+            } else {
+                _trackballStatus = "PRESS (again to return)";
+                _pressToExit = true;
+                render();
+            }
+        } else {
+            _pressToExit = false;
+            _trackballStatus = _trackball.getState();
+            render();
+        }
         return;
     }
+
     if (event == TrackballEvent::PRESS) returnHome();
 }
 
@@ -62,6 +74,7 @@ void Application::openSelectedItem() {
             break;
         case 2:
             _screen = Screen::TRACKBALL_TEST;
+            _pressToExit = false;
             _trackballStatus = _trackball.getState();
             render();
             break;
@@ -74,6 +87,7 @@ void Application::openSelectedItem() {
 
 void Application::returnHome() {
     _screen = Screen::HOME;
+    _pressToExit = false;
     render();
 }
 
